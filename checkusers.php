@@ -15,10 +15,19 @@ $query = "SELECT * FROM users WHERE (username = '$username' AND password = '$pas
 $sql_data = $mysqli -> query($query);
 
 if (mysqli_num_rows($sql_data) != 0){ 
-  echo "<h1> Successfully logged in! <h1>";
+  
+  echo '<form id="myForm" action="trips.php" method="post">';  
+  echo '<input type="hidden" name="Username" value="'.$username.'">';
+  echo '</form>';
+  echo '<script type="text/javascript">';
+  echo "document.getElementById('myForm').submit();";
+  echo '</script>';
+
 } else {
-  echo "<h1> Username and password do not match, please try again or sign up <h1>";
+  echo "<script> alert('Username and password do not match, please try again or sign up') </script>";
+  echo "<script>window.location.href='login.html';</script>";  
 }
+
 echo mysqli_num_rows($sql_data);
 mysqli_close($mysqli);
 ?>
