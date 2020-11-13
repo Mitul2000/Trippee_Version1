@@ -6,8 +6,11 @@ if ($mysqli -> connect_errno) {
   exit();
 }
 
+$query = "SELECT * FROM users WHERE (username = '$username');";
+$sql_data = $mysqli -> query($query);
 
-if (!empty($_POST)){
+if (mysqli_num_rows($sql_data) != 0){ 
+  if (!empty($_POST)){
     echo $_POST["Username"];
     $username = mysqli_real_escape_string($mysqli, $_POST["Username"]);
     $firstname = mysqli_real_escape_string($mysqli, $_POST["Firstname"]);
@@ -23,6 +26,15 @@ if (!empty($_POST)){
     die();
     
 }
+
+}
+else{
+  echo "<script> alert('Username already exists') </script>";
+  echo "<script>window.location.href='signup.html';</script>"; 
+
+}
+
+
 
 // Print auto-generated id
 echo "New record has id: " . $mysqli -> insert_id;

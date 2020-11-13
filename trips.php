@@ -24,7 +24,7 @@ if(isset($_POST)){
 ?>
     <input id="submit" type="submit" value="CreateTrip">
     </form>
-
+    </div>
 
     <div id="triplist">
 	<table id="triptable">
@@ -39,8 +39,9 @@ $sql_data = $mysqli -> query($query);
 
         echo '<tr>';
         echo '<td>';
-        echo '<form method="form" action="viewtrip.php">';
+        echo '<form method="post" action="viewtrip.php">';
         echo '<input type="hidden" name="tripid" value="'.$row['tripid'].'">';
+        echo '<input type="hidden" name="Username" value="'.$username.'">';
         echo '<input type="submit" value="'.$row['tripname'].' '.substr($row['datecreated'], 0, -8).'">';
         echo '</form>';
         echo '<td>';
@@ -52,6 +53,6 @@ $sql_data = $mysqli -> query($query);
 
         </tbody>
     </table>
-
+</div>
 </body>
 </html>
