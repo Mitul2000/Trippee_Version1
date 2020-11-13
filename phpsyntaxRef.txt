@@ -1,0 +1,97 @@
+	//set up connection
+$mysqli = new mysqli("localhost:8080","root","WoI34DVV72McuhuJ","trippe");
+
+if ($mysqli -> connect_errno) {
+  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+  exit();
+}
+
+
+
+//adding a form for user input and directing to a page
+        echo '<form method="post" action="validatingfriend.php" onsubmit="myFunction()">';
+        echo '<input type="text" name="Username">';
+        echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
+        echo '<input type="hidden" name="Owner" value="'.$username.'">';
+        echo '<input type="submit" value="Add">';
+        echo '</form>';
+
+
+
+	//getting a value from post
+if(isset($_POST)){
+    $username = $_POST['Username']; 
+    $tripid = $_POST['tripid'];  
+}
+
+
+
+
+	//check if a value exists in a table
+$query = "SELECT * FROM users WHERE (username = '$username');";
+$sql_data = $mysqli -> query($query);
+
+if (mysqli_num_rows($sql_data) != 0){ 
+}
+
+
+
+
+	//Going back to a page you redirected from -> keeps refrence
+if(isset($_POST)){
+    $username = $_POST['Username'];
+    $tripid = $_POST['tripid'];
+    $owner = $_POST['Owner'];
+    
+	//delete query
+    $mysqli -> query("DELETE FROM trippe.members WHERE tripid='$tripid' AND username='$username'");
+    
+    echo '<form id="myForm" action="viewmembers.php" method="post">';
+    echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  
+    echo '<input type="hidden" name="Username" value="'.$owner.'">';
+    echo '</form>';
+    echo '<script type="text/javascript">';
+    echo "document.getElementById('myForm').submit();";
+    echo '</script>';
+}
+
+
+
+
+
+//Iterating through a TABLE and making printing out each row in a table. 
+
+
+    <div id="triplist">
+	<table id="triptable">
+		<tbody>    
+<?php
+$query = "SELECT trips.tripid, trips.tripname, trips.datecreated  FROM trips  WHERE tripid IN (SELECT tripid FROM members WHERE username = '$username');";
+$sql_data = $mysqli -> query($query);
+
+    while ($row = $sql_data->fetch_assoc()){
+
+        echo '<tr>';
+        echo '<td>';
+        echo '<form method="post" action="viewtrip.php">';
+        echo '<input type="hidden" name="tripid" value="'.$row['tripid'].'">';
+        echo '<input type="hidden" name="Username" value="'.$username.'">';
+        echo '<input type="submit" value="'.$row['tripname'].' '.substr($row['datecreated'], 0, -8).'">';
+        echo '</form>';
+        echo '<td>';
+        echo '</tr>';
+        
+    }
+
+?>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
