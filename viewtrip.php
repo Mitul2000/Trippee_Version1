@@ -11,6 +11,16 @@ if(isset($_POST)){
     $tripid = $_POST['tripid'];    
 }
 
+$sql_data = $mysqli -> query("SELECT name, description, time FROM reminders WHERE tripid = '$tripid' ");
+
+echo "<table>"; // start a table tag in the HTML
+echo "Reminders:";
+while($row = $sql_data->fetch_assoc()){ 
+    echo "<tr><td>" . $row['name'] . "</td><td>" . $row['description'] . "</td><td>" . $row['time'] . "</td></tr>";
+}
+
+echo "</table>"; //Close the table in HTML
+
 ?>
 
 <form method="post" action="viewgroupbudget.php">
@@ -37,12 +47,12 @@ if(isset($_POST)){
     <input type="submit" value="Travelling">
 </form>
 
-<form method="post" action="viewreminders.php">
+<form method="post" action="createreminders.php">
 <?php        
         echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
         echo '<input type="hidden" name="Username" value="'.$username.'">';
 ?>
-    <input type="submit" value="Reminders">
+    <input type="submit" value="Create Reminder">
 </form>
 
 <form method="post" action="viewpolls.php">
