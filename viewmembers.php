@@ -13,7 +13,11 @@ if(isset($_POST)){
 ?>
 <?php
         echo '<form method="post" action="validatingfriend.php" onsubmit="myFunction()">';
+<<<<<<< HEAD
         echo '<input type="text" name="Username" required>';
+=======
+        echo '<input type="text" name="Username">';
+>>>>>>> reminders
         echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
         echo '<input type="hidden" name="Owner" value="'.$username.'">';
         echo '<input type="submit" value="Add">';
