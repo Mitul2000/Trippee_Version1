@@ -10,7 +10,7 @@ if(isset($_POST)){
 }
 
 
-$sql_data = $mysqli -> query("SELECT p.*, GROUP_CONCAT(pa.option ORDER BY pa.pollid) AS answers FROM `polls` p LEFT JOIN `poll_answers` pa ON pa.pollid = p.pollid WHERE p.tripid = '$tripid' GROUP BY p.pollid");
+$sql_data = $mysqli -> query("SELECT p.*, GROUP_CONCAT(pa.options ORDER BY pa.pollid) AS answers FROM `polls` AS p LEFT JOIN `poll_answers` AS pa ON pa.pollid = p.pollid WHERE p.tripid = '$tripid' GROUP BY p.pollid");
 ?>
   
 <div class="content home">

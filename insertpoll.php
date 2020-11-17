@@ -18,7 +18,7 @@
 
 	foreach ($options as $option) {
 	    if (empty($option)) continue;
-	    $mysqli -> query("INSERT INTO poll_answers (pollid, option, votes) VALUES ('$pollid', '$option', 0)");
+	    $mysqli -> query("INSERT INTO poll_answers (pollid, options, votes) VALUES ('$pollid', '$option', 0)");
 	}
 
 	echo '<form id="myForm" action="viewpolls.php" method="post">';

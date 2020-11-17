@@ -27,8 +27,8 @@ $poll = $sql_data_poll->fetch_assoc();
         ?>
         <?php while($poll_answer = $sql_data_answer->fetch_assoc()){ ?>
                     <label>
-                        <input type="radio" name="poll_answer" value="<?=$poll_answer['option']?>">
-                            <?php echo $poll_answer['option'] ?>
+                        <input type="radio" name="poll_answer" value="<?=$poll_answer['options']?>">
+                            <?php echo $poll_answer['options'] ?>
                     </label>
             <?php } ?>
     <input id="submit" type="submit" value="Vote">

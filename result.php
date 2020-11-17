@@ -11,7 +11,7 @@ if(count($_POST) >= 4){
     $question = $_POST['question'];
     $answer = $_POST['poll_answer'];
 
-    $mysqli -> query("UPDATE poll_answers SET votes = votes + 1 WHERE pollid = '$pollid' AND option = '$answer'");
+    $mysqli -> query("UPDATE poll_answers SET votes = votes + 1 WHERE pollid = '$pollid' AND options = '$answer'");
     
 } else {
 	$tripid = $_POST['tripid'];
@@ -35,7 +35,7 @@ $sql_data = $mysqli -> query("SELECT * FROM poll_answers WHERE pollid = '$pollid
     <tbody>
         <?php while($poll = $sql_data->fetch_assoc()){?>
         <tr>
-            <td><?=$poll['option']?></td>
+            <td><?=$poll['options']?></td>
             <td><?=$poll['votes']?></td>
             <td>
         </td>

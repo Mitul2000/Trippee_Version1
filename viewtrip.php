@@ -47,20 +47,12 @@ echo "</table>"; //Close the table in HTML
     <input type="submit" value="Travelling">
 </form>
 
-<<<<<<< HEAD
-<form method="post" action="viewreminders.php">
-=======
 <form method="post" action="createreminders.php">
->>>>>>> reminders
 <?php        
         echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
         echo '<input type="hidden" name="Username" value="'.$username.'">';
 ?>
-<<<<<<< HEAD
-    <input type="submit" value="Reminders">
-=======
     <input type="submit" value="Create Reminder">
->>>>>>> reminders
 </form>
 
 <form method="post" action="viewpolls.php">
