@@ -11,6 +11,11 @@ if(isset($_POST)){
     $tripid = $_POST['tripid'];
     $objectid = $_POST['objectid'];  
 }
+echo '<form method="post" action="viewtraveloptions.php">';
+echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
+echo '<input type="hidden" name="Username" value="'.$username.'">';
+echo '<input type="submit" value="Back">';
+echo '</form>';
 
 echo '<form method="post" action="insertdestination.php">';
 echo '<input type="hidden" name="tripid" value="'.$tripid.'">';

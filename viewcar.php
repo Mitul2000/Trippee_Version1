@@ -12,7 +12,11 @@ if(isset($_POST)){
     $objectid = $_POST['objectid'];  
 }
 
-
+echo '<form method="post" action="viewtraveloptions.php">';
+echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
+echo '<input type="hidden" name="Username" value="'.$username.'">';
+echo '<input type="submit" value="Back">';
+echo '</form>';
 
 echo '<form method="post" action="insertdestinationcar.php">';
 echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
@@ -130,6 +134,19 @@ $sql_data = $mysqli -> query($query);
                     echo '<input type="submit" value="Select Seat">';
                     echo '</form>';
                     echo '</td>';
+                }
+                if($tempnum%3 ==0){
+                    for($j =1; $j<= 3; $j++){
+                        echo '<td>';
+                        echo '<form method="post" id ="'.$i.''.$j.'" action="insertpassenger.php">';
+                        echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
+                        echo '<input type="hidden" name="Username" value="'.$username.'">';
+                        echo '<input type="hidden" name="objectid" value="'.$objectid.'">';
+                        echo '<input type="hidden" name="seat" value="'.$i.''.$j.'">';
+                        echo '<input type="submit" value="Select Seat">';
+                        echo '</form>';
+                        echo '</td>';
+                    }
                 }
                 echo '</tr>';
             }

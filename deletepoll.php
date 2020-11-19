@@ -7,6 +7,7 @@ if ($mysqli -> connect_errno) {
 
 if(isset($_POST)){
     $tripid = $_POST['tripid'];
+    $username = $_POST['Username'];
     $pollid = $_POST['pollid']; 
 }
 
@@ -15,6 +16,7 @@ if(isset($_POST)){
 
     echo '<form id="myForm" action="viewpolls.php" method="post">';
     echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  
+    echo '<input type="hidden" name="Username" value="'.$username.'">';  
     echo '</form>';
     echo '<script type="text/javascript">';
     echo "document.getElementById('myForm').submit();";

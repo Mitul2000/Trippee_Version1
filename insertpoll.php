@@ -6,9 +6,11 @@
 	}
 
 	if (!empty($_POST)){
-	    $tripid = $_POST['tripid'];
+		$username = $_POST['Username'];
+		$tripid = $_POST['tripid'];
 	    $question = $_POST['question'];
-	    $description = $_POST['description'];
+		$description = $_POST['description'];
+
 	}
 
 	$mysqli -> query("INSERT INTO polls (tripid, question, description) VALUES ('$tripid', '$question', '$description')");
@@ -22,7 +24,8 @@
 	}
 
 	echo '<form id="myForm" action="viewpolls.php" method="post">';
-    echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
+	echo '<input type="hidden" name="Username" value="'.$username.'">';
+	echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
     echo '</form>';
     echo '<script type="text/javascript">';
     echo "document.getElementById('myForm').submit();";

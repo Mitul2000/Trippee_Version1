@@ -24,13 +24,13 @@ $sql_data = $mysqli -> query($query);
 
 if (mysqli_num_rows($sql_data) == 0){ 
   $mysqli -> query("INSERT INTO trippe.users (username, firstname, lastname, nickname, dateofbirth, email, avatar, password) VALUES ('$username', '$firstname', '$lastname','$nickname','$dateofBirth','$email','','$password')");
-    header("Location: login.html");
+    header("Location: index.html");
     die();
 
 }
 else{
   echo "<script> alert('Username already exists') </script>";
-  echo "<script>window.location.href='signup.html';</script>"; 
+  echo "<script>window.location.href='index.html';</script>"; 
 
 }
 

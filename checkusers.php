@@ -25,7 +25,7 @@ if (mysqli_num_rows($sql_data) != 0){
 
 } else {
   echo "<script> alert('Username and password do not match, please try again or sign up') </script>";
-  echo "<script>window.location.href='login.html';</script>";  
+  echo "<script>window.location.href='index.html';</script>";  
 }
 
 echo mysqli_num_rows($sql_data);

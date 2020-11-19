@@ -10,7 +10,15 @@ if(isset($_POST)){
     $username = $_POST['Username'];
     $tripid = $_POST['tripid'];
     
+
+    $mysqli -> query("DELETE FROM trippe.individual_entries WHERE tripid='$tripid' AND username='$username'");
+    $mysqli -> query("DELETE FROM trippe.individual_budgets WHERE tripid='$tripid' AND username='$username'");
+    $mysqli -> query("DELETE FROM trippe.destinations WHERE objectid In (SELECT objectid FROM custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND username='$username')");
+    $mysqli -> query("DELETE FROM trippe.custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND username='$username'");   
+    $mysqli -> query("DELETE FROM trippe.passengers WHERE objectid In (SELECT objectid FROM cars WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid')) AND username='$username'");
     $mysqli -> query("DELETE FROM trippe.members WHERE tripid='$tripid' AND username='$username'");
+
+
     
     
     
@@ -26,3 +34,14 @@ if(isset($_POST)){
 }
 
 ?>
+
+
+<!--
+
+DELETE FROM trippe.individual_entries WHERE tripid= 41 AND username='Preet1234';
+DELETE FROM trippe.individual_budget WHERE tripid=41 AND username='Preet1234';
+DELETE FROM trippe.destinations WHERE objectid In (SELECT objectid FROM custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid=41) AND username='Preet1234');
+DELETE FROM trippe.custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid=41) AND username='Preet1234';
+DELETE FROM trippe.passengers WHERE objectid In (SELECT objectid FROM cars WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid=41)) AND username='Preet1234';
+DELETE FROM trippe.members WHERE tripid= 41 AND username='Preet1234';
+-->

@@ -10,7 +10,11 @@ if(isset($_POST)){
     $username = $_POST['Username']; 
     $tripid = $_POST['tripid'];  
 }
-
+echo '<form method="post" action="viewtraveloptions.php">';
+echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
+echo '<input type="hidden" name="Username" value="'.$username.'">';
+echo '<input type="submit" value="Back">';
+echo '</form>';
 ?>
 <form method="post" action="insertcustomtravel.php">
 <?php        
