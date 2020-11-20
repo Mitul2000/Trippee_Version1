@@ -8,7 +8,8 @@ if ($mysqli -> connect_errno) {
 
 if(isset($_POST)){
     $username = $_POST['Username']; 
-    $tripid = $_POST['tripid'];  
+    $tripid = $_POST['tripid'];
+    $member_id = $_POST['member_id'];  
     $carname = $_POST['carName'];
 }
 
@@ -19,7 +20,7 @@ $sql_data = $mysqli -> query("SELECT objectid FROM travel_options  WHERE tripid 
 $row = $sql_data->fetch_assoc();
 $objectid = $row['objectid'];
 
-$mysqli ->query("INSERT INTO custom_travels (objectid, username) VALUES('$objectid','$username')");
+$mysqli ->query("INSERT INTO custom_travels (objectid, username, member_id) VALUES('$objectid','$username','$member_id')");
 
 echo '<form id="myForm" action="viewtraveloptions.php" method="post">';
 echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  

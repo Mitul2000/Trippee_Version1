@@ -4,9 +4,10 @@ if ($mysqli -> connect_errno) {
     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
     exit();
 }
-$username = $_POST['Username'];
 
-if(count($_POST) >= 4){
+
+if(count($_POST) >= 5){
+   $username = $_POST['Username'];
     $tripid = $_POST['tripid'];
     $pollid = $_POST['pollid'];
     $question = $_POST['question'];
@@ -15,12 +16,16 @@ if(count($_POST) >= 4){
     $mysqli -> query("UPDATE poll_answers SET votes = votes + 1 WHERE pollid = '$pollid' AND options = '$answer'");
     
 } else {
+   $username = $_POST['Username'];
 	$tripid = $_POST['tripid'];
     $pollid = $_POST['pollid'];
     $question = $_POST['question'];
 }
 
+$view = $mysqli -> query("SELECT * FROM max_poll WHERE  pollid = '$pollid'");
 $sql_data = $mysqli -> query("SELECT * FROM poll_answers WHERE pollid = '$pollid'");
+
+$viewrow = $view -> fetch_assoc(); 
 
 ?>
 
@@ -241,22 +246,38 @@ input:focus ~ .highlight {
 <div id="content" class="p-4 p-md-5 pt-5">
   <div class = "container">
     <div class = "column">
+       
     <h3><?=$question?></h3>
     <hr>
 <div class="table-users">
 <table>
     <thead>
         <tr>
-            <td>Option</td>
-            <td>Votes</td>
+            <td><h4>Option</h4></td>
+            <td><h4>Votes</h4></td>
             <td></td>
         </tr>
     </thead>
     <tbody>
         <?php while($poll = $sql_data->fetch_assoc()){?>
         <tr>
-            <td><?=$poll['options']?></td>
-            <td><?=$poll['votes']?></td>
+        <td>
+           <?php
+            if ($viewrow['max'] == $poll['votes']){
+               echo '<strong><h5>'.$poll['options'].'</h5></strong>';
+            } else {
+               echo $poll['options'];
+            }
+            ?>            
+            </td>
+            <td><?php
+            if ($viewrow['max'] == $poll['votes']){
+               echo '<strong><h5>'.$poll['votes'].'</h5></strong>';
+            } else {
+               echo $poll['votes'];
+            }
+            ?>            
+            </td>
             <td>
         </td>
         </tr>

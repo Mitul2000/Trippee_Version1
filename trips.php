@@ -96,7 +96,6 @@ $sql_data = $mysqli -> query($query);
         echo '<h1><form method="post" action="viewtrip.php"></h1>';
         echo '<input type="hidden" name="tripid" value="'.$row['tripid'].'">';
         echo '<input type="hidden" name="Username" value="'.$username.'">';
-        echo $row['tripid'];
         echo '<button type="submit" class="btn btn-primary" id="thisbutton">'.$row['tripname'].'<br><div id="smalltext">'.substr($row['datecreated'], 0, -8).'</div></button>';        
         echo '<h2></form></h2>';
         echo '</div>';

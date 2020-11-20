@@ -8,8 +8,7 @@ if ($mysqli -> connect_errno) {
 
 $username = mysqli_real_escape_string($mysqli, $_POST['Username']);
 $password = mysqli_real_escape_string($mysqli, $_POST['Password']);
-echo $username;
-echo $password;
+
 
 $query = "SELECT * FROM users WHERE (username = '$username' AND password = '$password');";
 $sql_data = $mysqli -> query($query);

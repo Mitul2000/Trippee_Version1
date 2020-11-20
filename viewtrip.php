@@ -11,6 +11,10 @@ if(isset($_POST)){
     $tripid = $_POST['tripid'];   
     
 }
+
+$memberidquery = $mysqli -> query("SELECT * FROM members WHERE tripid = '$tripid' AND username = '$username'");
+$memberidrow = $memberidquery -> fetch_assoc();
+$memberid = $memberidrow['member_id'];
 ?>
 
 <html>
@@ -119,6 +123,7 @@ if(isset($_POST)){
             <?php        
             echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
             echo '<input type="hidden" name="Username" value="'.$username.'">';
+            echo '<input type="hidden" name="member_id" value="'.$memberid.'">';
             ?>
             <a href="javascript: submitdeleteform()"><span class="fa fa-trash-o mr-3"></span> Delete Trip</a></form>
           </li>
@@ -224,7 +229,7 @@ input:focus ~ .highlight {
     <div class = "row">
 
     <?php
-$sql_data = $mysqli -> query("SELECT name, description, time FROM reminders WHERE tripid = '$tripid' ");
+$sql_data = $mysqli -> query("SELECT name, description, time FROM reminders_trip WHERE tripid = '$tripid' ");
 
 echo '<div class="table-users">';
 echo "<table>"; // start a table tag in the HTML
@@ -233,8 +238,16 @@ while($row = $sql_data->fetch_assoc()){
     echo "<tr><td>" . $row['name'] . "</td><td>" . $row['description'] . "</td><td>" . $row['time'] . "</td></tr>";
 }
 
+
+
 echo "</table>"; //Close the table in HTML
 echo '</div>';
+
+$query2 = "SELECT * FROM people_on_each_trip WHERE tripid = '$tripid'";
+$sql_data2 = $mysqli -> query($query2);
+$row2 = $sql_data2 -> fetch_assoc();
+
+echo 'Total members: '.$row2['count'].'';
 ?>
 
       </div>

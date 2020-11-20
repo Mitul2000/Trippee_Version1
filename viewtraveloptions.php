@@ -10,7 +10,9 @@ if(isset($_POST)){
     $username = $_POST['Username']; 
     $tripid = $_POST['tripid'];  
 }
-
+$memberidquery = $mysqli -> query("SELECT * FROM members WHERE tripid = '$tripid' AND username = '$username'");
+$memberidrow = $memberidquery -> fetch_assoc();
+$memberid = $memberidrow['member_id'];
 ?>
 
 
@@ -229,27 +231,43 @@ input:focus ~ .highlight {
         echo '<input type="hidden" name="Username" value="'.$username.'">';
        
 ?>
-    <input type="submit" value="Add Cars">
+    <button type="submit" class="btn btn-secondary" >Add Cars</button>
 </form>
+
+<div style="padding-left:50px">
+
 <form method="post" action="customtravel.php">
 <?php        
         echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
         echo '<input type="hidden" name="Username" value="'.$username.'">';
+        echo '<input type="hidden" name="member_id" value="'.$memberid.'">';
+        
        
 ?>
-    <input type="submit" value="Custom travel">
+    <button type="submit" class="btn btn-secondary">Custom Travel</button>
 </form>
+</div>
 
-<?php //-------------------table ---------------- ?>
-<div id="triplist">
+</div>
+<hr>
+<div class = "row">
+<div class="column">
+  <div class="table-users">
 	<table id="triptable">
+    <thead>
+      <tr>
+        <th></th>
+        <th style="padding-left: 80px;">Next Destination</th>
+        <th style="padding-left: 80px;">Current Location</th>
+      </tr>
+    </thead>
 		<tbody>    
 <?php
- echo '<h1>'.$tripid.'</h1>';
+
+
 $query = "SELECT objectid, objectname FROM travel_options WHERE tripid= '$tripid' AND objectid IN (SELECT objectid FROM cars);";
 $sql_data = $mysqli -> query($query);
-
-    while ($row = $sql_data->fetch_assoc()){
+      while ($row = $sql_data->fetch_assoc()){
         
 
         echo '<tr>';
@@ -257,14 +275,55 @@ $sql_data = $mysqli -> query($query);
         echo '<form method="post" action="viewcar.php">';
         echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
         echo '<input type="hidden" name="Username" value="'.$username.'">';
+        echo '<input type="hidden" name="member_id" value="'.$memberid.'">';
         echo '<input type="hidden" name="objectid" value="'.$row['objectid'].'">';
-        echo '<input type="submit" value="'.$row['objectname'].'">';
+        
+        echo '<button type="submit" id="'.$row['objectid'].'" class="btn btn-secondary" >'.$row['objectname'].'</button>';
         echo '</form>';
         echo '</td>';
+        
+        $temp = $row['objectid'];
+        echo '<td>';
+
+        $destination = $mysqli ->query("SELECT * FROM travel_options_display WHERE objectid ='$temp'");
+        $next = $destination -> fetch_assoc();
+        if ($next != NULL){
+        echo '<div style ="padding-left: 80px;">';
+        echo ' '.$next['location'].'  '.substr($next['arrivaltime'], 0, 10).'</div><div style="padding-left:20px;"></div><div style="padding-left:160px;">'.substr($next['arrivaltime'], 10, 16).'</div>';
+        
+        }
+        
+        echo '</td>';
+        echo '<td>';
+        $location = $mysqli ->query("SELECT * FROM location_display WHERE objectid ='$temp'");
+        $current = $location -> fetch_assoc();
+        if ($current != NULL){
+          echo '<div style ="padding-left: 80px;">';
+          echo ''.$current['location'].'';
+          echo '</div>';
+
+        }
+        
+        echo '</td>';
+
         echo '</tr>';
         
-    }
+        
+      }
 
+
+$fullcarsquery = 'SELECT * FROM fullcars';
+$fullscarsdata = $mysqli -> query($fullcarsquery);
+// print_r($fullscarsdata);
+while ($fullcars = $fullscarsdata->fetch_assoc()){
+  echo '<script> var element = document.getElementById("'.$fullcars['objectid'].'");';
+  echo 'element.className = "btn btn-danger";';
+  echo '</script>';
+  
+}
+
+
+   
 ?>
 <?php
 $sql_datatwo = $mysqli -> query("SELECT objectid, objectname FROM travel_options WHERE tripid= '$tripid' AND EXISTS (SELECT objectid FROM custom_travels WHERE objectid = travel_options.objectid)");
@@ -275,10 +334,38 @@ $sql_datatwo = $mysqli -> query("SELECT objectid, objectname FROM travel_options
             echo '<form method="post" action="viewcustomtravels.php">';
             echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
             echo '<input type="hidden" name="Username" value="'.$username.'">';
+            echo '<input type="hidden" name="member_id" value="'.$memberid.'">';
             echo '<input type="hidden" name="objectid" value="'.$rowtwo['objectid'].'">';
-            echo '<input type="submit" value="'.$rowtwo['objectname'].'">';
+            echo '<button type="submit" class="btn btn-secondary">'.$rowtwo['objectname'].'</button>';
             echo '</form>';
             echo '</td>';
+
+        $temp = $rowtwo['objectid'];
+        echo '<td>';
+        $destination = $mysqli ->query("SELECT * FROM travel_options_display WHERE objectid ='$temp'");
+        $next = $destination -> fetch_assoc();
+        if ($next != NULL){
+        echo '<div style ="padding-left: 80px;">';
+        echo ' '.$next['location'].'  '.substr($next['arrivaltime'], 0, 10).'</div><div style="padding-left:20px;"></div><div style="padding-left:160px;">'.substr($next['arrivaltime'], 10, 16).'</div>';
+        
+        }
+        
+        echo '</td>';
+        echo '<td>';
+        $location = $mysqli ->query("SELECT * FROM location_display WHERE objectid ='$temp'");
+        $current = $location -> fetch_assoc();
+        if ($current != NULL){
+          echo '<div style ="padding-left: 80px;">';
+          echo ''.$current['location'].'';
+          echo '</div>';
+
+        }
+        
+        echo '</td>';
+
+
+
+
             echo '</tr>';
         }
     
@@ -287,6 +374,7 @@ $sql_datatwo = $mysqli -> query("SELECT objectid, objectname FROM travel_options
         </tbody>
     </table>
 </div>
+      </div>
     
       </div>
     </div>
@@ -299,6 +387,173 @@ $sql_datatwo = $mysqli -> query("SELECT objectid, objectname FROM travel_options
 body{
     background-color: #f2f2f2;
 }
+
+$baseColor: #398B93;
+$borderRadius: 10px;
+$imageBig: 100px;
+$imageSmall: 60px;
+$padding: 10px;
+
+body {
+   background-color: lighten($baseColor, 30%);
+   * { box-sizing: border-box; }
+}
+
+.header {
+   background-color: darken($baseColor, 5%);
+   color: white;
+   font-size: 1.5em;
+   padding: 1rem;
+   text-align: center;
+   text-transform: uppercase;
+}
+
+img {
+   border-radius: 50%;
+   height: $imageSmall;
+   width: $imageSmall;
+}
+
+.table-users {
+   border: 1px solid darken($baseColor, 5%);
+   border-radius: $borderRadius;
+   box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+   max-width: calc(100% - 2em);
+   margin: 1em auto;
+   overflow: hidden;
+   width: 800px;
+}
+
+table {
+   width: 100%;
+   
+   td, th { 
+      color: darken($baseColor, 10%);
+      padding: $padding; 
+   }
+   
+   td {
+      text-align: center;
+      vertical-align: middle;
+      
+      &:last-child {
+         font-size: 0.95em;
+         line-height: 1.4;
+         text-align: left;
+      }
+   }
+   
+   th { 
+      background-color: lighten($baseColor, 50%);
+      font-weight: 300;
+   }
+   
+   tr {     
+      &:nth-child(2n) { background-color: white; }
+      &:nth-child(2n+1) { background-color: lighten($baseColor, 55%) }
+   }
+}
+
+@media screen and (max-width: 700px) {   
+   table, tr, td { display: block; }
+   
+   td {
+      &:first-child {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         width: $imageBig;
+      }
+
+      &:not(:first-child) {
+         clear: both;
+         margin-left: $imageBig;
+         padding: 4px 20px 4px 90px;
+         position: relative;
+         text-align: left;
+
+         &:before {
+            color: lighten($baseColor, 30%);
+            content: '';
+            display: block;
+            left: 0;
+            position: absolute;
+         }
+      }
+
+      &:nth-child(2):before { content: 'Name:'; }
+      &:nth-child(3):before { content: 'Email:'; }
+      &:nth-child(4):before { content: 'Phone:'; }
+      &:nth-child(5):before { content: 'Comments:'; }
+   }
+   
+   tr {
+      padding: $padding 0;
+      position: relative;
+      &:first-child { display: none; }
+   }
+}
+
+@media screen and (max-width: 500px) {
+   .header {
+      background-color: transparent;
+      color: lighten($baseColor, 60%);
+      font-size: 2em;
+      font-weight: 700;
+      padding: 0;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+   }
+   
+   img {
+      border: 3px solid;
+      border-color: lighten($baseColor, 50%);
+      height: $imageBig;
+      margin: 0.5rem 0;
+      width: $imageBig;
+   }
+   
+   td {
+      &:first-child { 
+         background-color: lighten($baseColor, 45%); 
+         border-bottom: 1px solid lighten($baseColor, 30%);
+         border-radius: $borderRadius $borderRadius 0 0;
+         position: relative;   
+         top: 0;
+         transform: translateY(0);
+         width: 100%;
+      }
+      
+      &:not(:first-child) {
+         margin: 0;
+         padding: 5px 1em;
+         width: 100%;
+         
+         &:before {
+            font-size: .8em;
+            padding-top: 0.3em;
+            position: relative;
+         }
+      }
+      
+      &:last-child  { padding-bottom: 1rem !important; }
+   }
+   
+   tr {
+      background-color: white !important;
+      border: 1px solid lighten($baseColor, 20%);
+      border-radius: $borderRadius;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+      margin: 0.5rem 0;
+      padding: 0;
+   }
+   
+   .table-users { 
+      border: none; 
+      box-shadow: none;
+      overflow: visible;
+   }
+}
+
 </style>
 
       </div>

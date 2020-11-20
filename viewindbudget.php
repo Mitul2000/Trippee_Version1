@@ -233,10 +233,14 @@ input:focus ~ .highlight {
                 
         $budget = $mysqli -> query("SELECT * FROM individual_budget WHERE tripid = '$tripid' AND username = '$username'");
 
+         $memberidquery = $mysqli -> query("SELECT * FROM members WHERE tripid = '$tripid' AND username = '$username'");
+         $memberidrow = $memberidquery -> fetch_assoc();
+         $memberid = $memberidrow['member_id'];
         if (mysqli_num_rows($budget) == 0){
             echo '<form id="myForm" action="insertindbudget.php" method="post">';
             echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  
             echo '<input type="hidden" name="Username" value="'.$username.'">';
+            echo '<input type="hidden" name="member_id" value="'.$memberid.'">';
             echo '<div class="group">';
             echo '<input type="number" name="Budget" required><br><br>';
             echo '<span class="highlight"></span>';
@@ -254,15 +258,16 @@ input:focus ~ .highlight {
         echo '<form id="myForm" action="insertindbudentry.php" method="post">';
         echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  
         echo '<input type="hidden" name="Username" value="'.$username.'">';
+        echo '<input type="hidden" name="member_id" value="'.$memberid.'">';
         echo '<div class="group">';
-        echo '<input type="text" name="Description" required><br><br>';
+        echo '<input type="text" name="Description" required>';
         echo '<span class="highlight"></span>';
         echo '<span class="bar"></span>';
         echo '<label>Description</label>';
         echo '</div>';
 
         echo '<div class="group">';
-        echo '<input type="number" name="Value" required><br><br>';
+        echo '<input type="number" name="Value" required>';
         echo '<span class="highlight"></span>';
         echo '<span class="bar"></span>';
         echo '<label>Value</label>';
@@ -300,10 +305,18 @@ input:focus ~ .highlight {
         echo '</tbody>';
         echo '</table>';
         echo '</div>';
-        echo'<p>Total value: $'.$total.' ';
-        if ($total > $budget){
-            echo'<p class="text-danger">Value is over budget</p>';
-        }
+
+        echo '<div class="column">';
+
+
+        echo'<p>Total value $'.$total.'</p><hr>';
+
+         if ($total > $budget){
+            echo'<p class="text-danger"><strong>Value is over budget!<strong></p>';
+         }
+
+        echo'</div>';
+        
         }
         ?>
       </div>

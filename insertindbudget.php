@@ -9,10 +9,11 @@ if ($mysqli -> connect_errno) {
 if(isset($_POST)){
     $username = $_POST['Username'];
     $tripid = $_POST['tripid'];
-    $budget = $_POST['Budget'];    
+    $member_id = $_POST['member_id'];
+    $budget = $_POST['Budget'];   
 }
 
-$mysqli -> query("INSERT INTO individual_budget (tripid, username, budget) VALUES ('$tripid', '$username', '$budget')");
+$mysqli -> query("INSERT INTO individual_budget (tripid, username, budget, member_id) VALUES ('$tripid', '$username', '$budget','$member_id')");
 
 echo '<form id="myForm" action="viewindbudget.php" method="post">';
 echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  

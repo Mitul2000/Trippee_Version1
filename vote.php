@@ -254,7 +254,7 @@ $sql_data = $mysqli -> query("SELECT p.*, GROUP_CONCAT(pa.options ORDER BY pa.po
         <?php while($poll_answer = $sql_data_answer->fetch_assoc()){
   
                             echo '<h6>'.$poll_answer['options'].'</h6>';         
-                            echo '<input type="radio" name="poll_answer" value="'.$poll_answer['options'].'">'; 
+                            echo '<input type="radio" name="poll_answer" checked value="'.$poll_answer['options'].'">'; 
                             echo '<hr>';
         } 
         ?>

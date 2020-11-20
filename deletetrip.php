@@ -9,14 +9,15 @@ if ($mysqli -> connect_errno) {
 if(isset($_POST)){
     $username = $_POST['Username'];
     $tripid = $_POST['tripid'];
+    $member_id=$_POST['member_id'];
     
 
-    $mysqli -> query("DELETE FROM trippe.individual_entries WHERE tripid='$tripid' AND username='$username'");
-    $mysqli -> query("DELETE FROM trippe.individual_budgets WHERE tripid='$tripid' AND username='$username'");
-    $mysqli -> query("DELETE FROM trippe.destinations WHERE objectid In (SELECT objectid FROM custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND username='$username')");
-    $mysqli -> query("DELETE FROM trippe.custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND username='$username'");   
-    $mysqli -> query("DELETE FROM trippe.passengers WHERE objectid In (SELECT objectid FROM cars WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid')) AND username='$username'");
-    $mysqli -> query("DELETE FROM trippe.members WHERE tripid='$tripid' AND username='$username'");
+    $mysqli -> query("DELETE FROM trippe.individual_entries WHERE member_id='$member_id'");
+    $mysqli -> query("DELETE FROM trippe.individual_budget WHERE member_id = '$member_id'");
+    $mysqli -> query("DELETE FROM trippe.destinations WHERE objectid In (SELECT objectid FROM custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND member_id='$member_id')");
+    $mysqli -> query("DELETE FROM trippe.custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND member_id='$member_id'");   
+    $mysqli -> query("DELETE FROM trippe.passengers WHERE objectid In (SELECT objectid FROM cars WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid')) AND member_id='$member_id'");
+    $mysqli -> query("DELETE FROM trippe.members WHERE member_id='$member_id'");
 
 
     

@@ -255,14 +255,14 @@ echo '<input type="hidden" name="Username" value="'.$username.'">';
 
 
 echo '<div class="group">';
-echo '<input type="text" name="Description" required><br><br>';
+echo '<input type="text" name="Description" required>';
 echo '<span class="highlight"></span>';
 echo '<span class="bar"></span>';
 echo '<label>Description</label>';
 echo '</div>';
 
 echo '<div class="group">';
-echo '<input type="number" name="Value" required><br><br>';
+echo '<input type="number" name="Value" required>';
 echo '<span class="highlight"></span>';
 echo '<span class="bar"></span>';
 echo '<label>Value</label>';
@@ -272,7 +272,7 @@ echo '<button type="submit" class="btn btn-secondary">Create Entry</button>';
 echo '</form>';
 
 
-$view = $mysqli -> query("SELECT * FROM group_entries WHERE tripid = '$tripid'");
+$view = $mysqli -> query("SELECT * FROM group_budget_trip WHERE tripid = '$tripid'");
 
 $total = 0;
 $members = 0;
@@ -291,10 +291,10 @@ while ($row = $view->fetch_assoc()){
     echo '<tr>';
     echo '<td>';
     echo $row['description'];
-    echo '<td>';
+    echo '</td>';
     echo '<td>';
     echo $row['value'];
-    echo '<td>';
+    echo '</td>';
     echo '</tr>';
     $total = $total + $row['value'];
 }
@@ -304,17 +304,24 @@ echo '</table>';
 echo '</div>';
 
 $num = $mysqli -> query("SELECT * FROM people_on_each_trip WHERE tripid = '$tripid'");
+$query2 = $mysqli -> query("SELECT * FROM avg_individual_budget WHERE tripid = '$tripid'");
+$row2 = $query2 -> fetch_assoc();
+
 
 while ($row = $num->fetch_assoc()){
     $members = $row['count'];
 }
+echo '<div class="column">';
+
 $perperson = $total/$members;
-echo'<p>Total value per person: $'.$perperson.'</p>';
-if ($perperson > $budget){
-    echo'<p class="text-danger">Value is over budget</p>';
+echo'<p>Total value per person: $'.$perperson.'</p><p>Average cost of each entry: $'.$row2['avg'].'</p><hr>';
+
+
+if ($total > $budget){
+    echo'<p class="text-danger"><strong>Value is over budget!<strong></p>';
 }
 ?>
-
+</div>
       </div>
     </div>
 </div>

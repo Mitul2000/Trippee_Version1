@@ -12,6 +12,7 @@ if(isset($_POST)){
     $objectid = $_POST['objectid'];
     $destination = $_POST['destination'];
     $priority = $_POST['priority'];  
+    $member_id = $_POST['member_id']; 
 }
 
 
@@ -21,6 +22,7 @@ echo '<form id="myForm" action="viewcar.php" method="post">';
 echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  
 echo '<input type="hidden" name="Username" value="'.$username.'">';
 echo '<input type="hidden" name="objectid" value="'.$objectid.'">';
+echo '<input type="hidden" name="member_id" value="'.$member_id.'">';
 echo '</form>';
 echo '<script type="text/javascript">';
 echo "document.getElementById('myForm').submit();";
