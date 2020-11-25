@@ -1,9 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost:8080","root","WoI34DVV72McuhuJ","trippe");
-if ($mysqli -> connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-    exit();
-}
+include_once('config.php');
 
 
 if(isset($_POST)){
@@ -11,7 +7,16 @@ if(isset($_POST)){
     $tripid = $_POST['tripid'];
     $owner = $_POST['Owner'];
     
-    $mysqli -> query("DELETE FROM trippe.members WHERE tripid='$tripid' AND username='$username'");
+    $memberidquery = $mysqli -> query("SELECT * FROM members WHERE tripid = '$tripid' AND username = '$username'");
+    $memberidrow = $memberidquery -> fetch_assoc();
+    $member_id = $memberidrow['member_id'];
+
+    $mysqli->query("DELETE FROM trippe.individual_entries WHERE member_id='$member_id'");
+    $mysqli->query("DELETE FROM trippe.individual_budget WHERE member_id = '$member_id'");
+    $mysqli->query("DELETE FROM trippe.destinations WHERE objectid In (SELECT objectid FROM custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND member_id='$member_id')");
+    $mysqli->query("DELETE FROM trippe.custom_travels WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid') AND member_id='$member_id'");
+    $mysqli->query("DELETE FROM trippe.passengers WHERE objectid In (SELECT objectid FROM cars WHERE objectid In (SELECT objectid FROM travel_options WHERE tripid='$tripid')) AND member_id='$member_id'");
+    $mysqli->query("DELETE FROM trippe.members WHERE member_id='$member_id'");
     
     echo '<form id="myForm" action="viewmembers.php" method="post">';
     echo '<input type="hidden" name="tripid" value="'.$tripid.'">';  
@@ -21,7 +26,5 @@ if(isset($_POST)){
     echo "document.getElementById('myForm').submit();";
     echo '</script>';
 }
-
-
 
 ?>

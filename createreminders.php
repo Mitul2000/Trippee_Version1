@@ -1,26 +1,13 @@
 <?php
-$mysqli = new mysqli("localhost:8080","root","WoI34DVV72McuhuJ","trippe");
-if ($mysqli -> connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-    exit();
+include_once('config.php');
+
+if(isset($_POST)){
+  $username = $_POST['Username'];
+  $tripid = $_POST['tripid'];
 }
-
+    
 ?>
-    <?php
-    if(isset($_POST)){
-        $username = $_POST['Username'];
-        $tripid = $_POST['tripid'];
-    }
-    // echo '<form method="post" action="viewtrip.php">';
-    // echo '<input type="hidden" name="tripid" value="'.$tripid.'">';
-    // echo '<input type="hidden" name="Username" value="'.$username.'">';
-    // echo '<input type="submit" value="Back">';
-    // echo '</form>';
-    ?>
 
-
-
-<!--  -->
 <html>
 <head>
     <title>Trip</title>
@@ -34,13 +21,12 @@ if ($mysqli -> connect_errno) {
 </head>
 <body>
 
-
 <div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
 				<div class="custom-menu">
 					<button type="button" id="sidebarCollapse" class="btn btn-secondary"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-</svg>
+            <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
 	        </button>
         </div>
 	  		<div class="img bg-wrap text-center py-4" style="background-image: url(https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg);"><!-- image goes here-->
@@ -132,17 +118,12 @@ if ($mysqli -> connect_errno) {
           </li>
 
           <li>
-            <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
-          </li>
-          <li>
             <a href="index.html"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
           </li>
          
         </ul>
 
     	</nav>
-
-
 
 <script type="text/javascript"> 
         function submittripsform() { document.trips.submit(); }
@@ -155,10 +136,6 @@ if ($mysqli -> connect_errno) {
         function submitdeleteform() { document.delete.submit();}
         
 </script> 
-
-
-
-
 
 
         <!-- Page Content  -->

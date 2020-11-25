@@ -1,7 +1,9 @@
 * { box-sizing:border-box; }
 
 /* basic stylings ------------------------------------------ */
+
 body 				 { background:url(https://scotch.io/wp-content/uploads/2014/07/61.jpg); }
+
 .container 		{ 
   font-family:'Roboto';
   width:600px; 
@@ -10,23 +12,28 @@ body 				 { background:url(https://scotch.io/wp-content/uploads/2014/07/61.jpg);
   background:#FFF;
   padding:10px 50px 50px;
 }
+
 h2 		 { 
   text-align:center; 
   margin-bottom:50px; 
 }
+
 h2 small { 
   font-weight:normal; 
   color:#888; 
   display:block; 
 }
+
 .footer 	{ text-align:center; }
 .footer a  { color:#53B2C8; }
 
 /* form starting stylings ------------------------------- */
+
 .group 			  { 
   position:relative; 
   margin-bottom:45px; 
 }
+
 input 				{
   font-size:18px;
   padding:10px 10px 10px 5px;
@@ -35,9 +42,11 @@ input 				{
   border:none;
   border-bottom:1px solid #757575;
 }
+
 input:focus 		{ outline:none; }
 
 /* LABEL ======================================= */
+
 label 				 {
   color:#999; 
   font-size:18px;
@@ -59,7 +68,9 @@ input:focus ~ label, input:valid ~ label 		{
 }
 
 /* BOTTOM BARS ================================= */
+
 .bar 	{ position:relative; display:block; width:300px; }
+
 .bar:before, .bar:after 	{
   content:'';
   height:2px; 
@@ -71,19 +82,23 @@ input:focus ~ label, input:valid ~ label 		{
   -moz-transition:0.2s ease all; 
   -webkit-transition:0.2s ease all;
 }
+
 .bar:before {
   left:50%;
 }
+
 .bar:after {
   right:50%; 
 }
 
 /* active state */
+
 input:focus ~ .bar:before, input:focus ~ .bar:after {
   width:50%;
 }
 
 /* HIGHLIGHTER ================================== */
+
 .highlight {
   position:absolute;
   height:60%; 
@@ -95,6 +110,7 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
 }
 
 /* active state */
+
 input:focus ~ .highlight {
   -webkit-animation:inputHighlighter 0.3s ease;
   -moz-animation:inputHighlighter 0.3s ease;
@@ -102,14 +118,17 @@ input:focus ~ .highlight {
 }
 
 /* ANIMATIONS ================ */
+
 @-webkit-keyframes inputHighlighter {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
 }
+
 @-moz-keyframes inputHighlighter {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
 }
+
 @keyframes inputHighlighter {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }

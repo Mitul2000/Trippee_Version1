@@ -133,9 +133,6 @@ $poll = $sql_data_poll->fetch_assoc();
           </li>
 
           <li>
-            <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
-          </li>
-          <li>
             <a href="index.html"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
           </li>
          

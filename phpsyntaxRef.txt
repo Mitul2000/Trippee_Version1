@@ -1,4 +1,4 @@
-	//set up connection
+ 	//set up connection
 $mysqli = new mysqli("localhost:8080","root","WoI34DVV72McuhuJ","trippe");
 
 if ($mysqli -> connect_errno) {
@@ -89,6 +89,33 @@ $sql_data = $mysqli -> query($query);
 </div>
 
 
+<!-- this is the code for the image -->
+<?php
+    echo '<input type="hidden" name="Username" value="'.$username.'">';
+    $flname = $mysqli -> query("SELECT * FROM users WHERE username ='$username';");
+    $value = $flname->fetch_assoc();
+    echo '<div id = "img_div">';
+    echo '<img id="imageid" src="pictures/'.$value['avatar'].'">';
+    echo '</div>'
+?>
+<style>
+#img_div{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+#imageid{
+    height: 100px;
+    width: auto;
+    display: inline;
+    margin: 0 auto;
+  /* margin-left: -25%; //centers the  */
+
+}
+</style>
+<!-- ------------------------------- -->
 
 
 
